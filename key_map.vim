@@ -42,7 +42,4 @@ nnoremap <M-R> :source ~/.config/nvim/init.vim<CR>
 " nnoremap <M-z> :edit ~/AppData/Local/nvim/init.vim<CR>
 " nnoremap <M-r> :source ~/AppData/Local/nvim/init.vim<CR>
 
-autocmd Filetype dart nnoremap R :CocCommand flutter.run
-autocmd Filetype dart nnoremap Q :CocCommand flutter.dev.quit
-
 

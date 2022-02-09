@@ -164,7 +164,7 @@ let g:NERDSpaceDelims = 1
 " # Coc Nvim                        #
 " ###################################
 
-let g:coc_global_extensions = ['coc-clangd', 'coc-css', 'coc-eslint', 'coc-explorer', 'coc-fzf-preview', 'coc-git', 'coc-go', 'coc-html', 'coc-htmlhint', 'coc-html-css-support', 'coc-java', 'coc-json', 'coc-markdownlint', 'coc-pyright', 'coc-sh', 'coc-snippets', 'coc-sql', 'coc-vimlsp', 'coc-xml', 'coc-yaml']
+let g:coc_global_extensions = ['coc-clangd', 'coc-css', 'coc-eslint', 'coc-explorer', 'coc-fzf-preview', 'coc-git', 'coc-go', 'coc-html', 'coc-htmlhint', 'coc-html-css-support', 'coc-java', 'coc-json', 'coc-markdownlint', 'coc-pyright', 'coc-sh', 'coc-snippets', 'coc-sql', 'coc-sumneko-lua', 'coc-vimlsp', 'coc-xml', 'coc-yaml']
 
 set updatetime=300
 set shortmess+=c
@@ -181,16 +181,17 @@ endif
 " Use tab for trigger completion with characters ahead and navigate.
 " NOTE: Use command ':verbose imap <tab>' to make sure tab is not mapped by
 " other plugin before putting this into your config.
-inoremap <silent><expr> <TAB>
-      \ pumvisible() ? "\<C-n>" :
-      \ <SID>check_back_space() ? "\<TAB>" :
-      \ coc#refresh()
-inoremap <expr><S-TAB> pumvisible() ? "\<C-p>" : "\<C-h>"
 
-function! s:check_back_space() abort
-  let col = col('.') - 1
-  return !col || getline('.')[col - 1]  =~# '\s'
-endfunction
+" inoremap <silent><expr> <TAB>
+"       \ pumvisible() ? "\<C-n>" :
+"       \ <SID>check_back_space() ? "\<TAB>" :
+"       \ coc#refresh()
+" inoremap <expr><S-TAB> pumvisible() ? "\<C-p>" : "\<C-h>"
+" 
+" function! s:check_back_space() abort
+"   let col = col('.') - 1
+"   return !col || getline('.')[col - 1]  =~# '\s'
+" endfunction
 
 " Use <c-space> to trigger completion.
 " if has('nvim')
