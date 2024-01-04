@@ -36,6 +36,7 @@ lazy.setup({
   require("plugins.autopair"),
   require("plugins.surround"),
   require('plugins.copilot'),
+  require('plugins.comment'),
 
   -- LSP
   -- require("lsp"), depend on lsp-config, required in it
