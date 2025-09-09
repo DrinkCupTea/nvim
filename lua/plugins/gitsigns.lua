@@ -1,5 +1,5 @@
 return {
-  "/lewis6991/gitsigns.nvim",
+  "lewis6991/gitsigns.nvim",
   -- event = "LazyFile",
   opts = {
     -- signs = {
@@ -38,9 +38,6 @@ return {
       relative = 'cursor',
       row = 0,
       col = 1
-    },
-    yadm = {
-      enable = false
     },
 
   }

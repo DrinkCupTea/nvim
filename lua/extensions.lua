@@ -16,8 +16,6 @@ local lazy = require("lazy")
 lazy.setup({
   --
   "folke/which-key.nvim",
-  "folke/neodev.nvim",
-  { "folke/neoconf.nvim", cmd = "Neoconf" },
 
   -- UI
   require("plugins.bufferline"),
@@ -27,9 +25,9 @@ lazy.setup({
 
   -- FUNCTIONAL
   require("plugins.neo-tree"),
-  require("plugins.telescope"),
+  require("plugins.fzf-lua"),
   require("plugins.treesitter"),
-  -- require('plugins.gitsigns'),
+  require('plugins.gitsigns'),
 
   -- CODE
   require("plugins.autopair"),

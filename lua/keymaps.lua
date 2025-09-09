@@ -77,9 +77,9 @@ map("n", "<leader>bl", ":BufferLineCloseRight<CR>", opt)
 map("n", "<leader>bh", ":BufferLineCloseLeft<CR>", opt)
 map("n", "<leader>bc", ":BufferLinePickClose<CR>", opt)
 
--- telescope
-map("n", "<C-p>", ":Telescope find_files<CR>", opt)
-map("n", "<C-M-F>", ":Telescope live_grep<CR>", opt)
+-- fzf-lua
+map("n", "<C-p>", ":FzfLua files<CR>", opt)
+map("n", "<C-M-F>", ":FzfLua live_grep<CR>", opt)
 
 map("i", "<C-b>", "<ESC>cwa", opt)
 
