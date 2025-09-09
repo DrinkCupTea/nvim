@@ -24,18 +24,16 @@ lazy.setup({
   require("plugins.gruvbox"),
   require("plugins.ibl"),
   require("plugins.lualine"),
-  require("plugins.noice"),
 
   -- FUNCTIONAL
   require("plugins.neo-tree"),
   require("plugins.telescope"),
   require("plugins.treesitter"),
-  require('plugins.gitsigns'),
+  -- require('plugins.gitsigns'),
 
   -- CODE
   require("plugins.autopair"),
   require("plugins.surround"),
-  require('plugins.copilot'),
   require('plugins.comment'),
 
   -- LSP
