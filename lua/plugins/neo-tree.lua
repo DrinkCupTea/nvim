@@ -1,7 +1,7 @@
 -- close neo-tree when no window left
--- vim.cmd [[
---   au WinEnter * if (winnr("$") == 1 && &filetype == "neotree") | q | endif
--- ]]
+vim.cmd [[
+  au WinEnter * if (winnr("$") == 1 && &filetype == "neo-tree") | q | endif
+]]
 
 return {
   "nvim-neo-tree/neo-tree.nvim",
