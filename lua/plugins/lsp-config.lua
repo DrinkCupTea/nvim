@@ -2,7 +2,8 @@ local M = {
   {
     "neovim/nvim-lspconfig",
     config = function()
-      require('lsp')
+      local lspconfig = require('lspconfig')
+      
       -- Global mappings.
       -- See `:help vim.diagnostic.*` for documentation on any of the below functions
       vim.keymap.set('n', '<space>e', vim.diagnostic.open_float)
@@ -38,8 +39,50 @@ local M = {
           vim.keymap.set('n', '<space>f', function()
             vim.lsp.buf.format { async = true }
           end, opts)
-      end,
-    })
+        end,
+      })
+      
+      -- Setup LSP servers directly
+      -- Note: Make sure you have the language servers installed on your system
+      
+      -- Lua LSP
+      lspconfig.lua_ls.setup({
+        settings = {
+          Lua = {
+            runtime = {
+              version = 'LuaJIT',
+            },
+            diagnostics = {
+              globals = {'vim'},
+            },
+            workspace = {
+              library = vim.api.nvim_get_runtime_file("", true),
+            },
+            telemetry = {
+              enable = false,
+            },
+          },
+        },
+      })
+      
+      -- C/C++ LSP
+      lspconfig.clangd.setup({})
+      
+      -- Python LSP
+      lspconfig.pyright.setup({})
+      
+      -- Go LSP
+      lspconfig.gopls.setup({})
+      
+      -- Rust LSP
+      lspconfig.rust_analyzer.setup({})
+      
+      -- CMake LSP
+      lspconfig.cmake.setup({})
+      
+      -- Vim LSP
+      lspconfig.vimls.setup({})
+      
     end
   },
 }

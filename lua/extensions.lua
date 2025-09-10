@@ -39,7 +39,6 @@ lazy.setup({
   -- require("lsp.debugger"),
   require("plugins.autocomplete"),
   require("plugins.lsp-config"),
-  require('plugins.mason'),
 
 })
 
