@@ -14,9 +14,6 @@ vim.opt.rtp:prepend(lazypath)
 local lazy = require("lazy")
 
 lazy.setup({
-  --
-  "folke/which-key.nvim",
-
   -- UI
   require("plugins.bufferline"),
   require("plugins.gruvbox"),

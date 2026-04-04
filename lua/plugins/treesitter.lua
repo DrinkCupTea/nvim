@@ -11,12 +11,11 @@ return {
       ensure_installed = {
         "c",
         "cpp",
-        "elixir",
         "go",
-        "heex",
         "html",
         "javascript",
         "lua",
+        "python",
         "query",
         "rust",
         "vim",
