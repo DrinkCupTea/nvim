@@ -62,9 +62,8 @@ local M = {
           { name = 'buffer' },
         },
         {
-          { name = 'luasnip', option = { show_autosnippets = true }}, -- For luasnip users.
+          { name = 'luasnip', option = { show_autosnippets = true }},
           { name = "path" },
-          { name = 'copilot' },
           { name = "nvim_lua" },
           { name = "calc" },
         }
