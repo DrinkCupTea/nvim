@@ -1,19 +1,16 @@
--- close neo-tree when no window left
-vim.cmd [[
-  au WinEnter * if (winnr("$") == 1 && &filetype == "neo-tree") | q | endif
-]]
-
+-- neo-tree.lua — file explorer.
+-- `keys = { ... }` registers <C-n> only after the plugin loads (lazy.nvim
+-- will install the mapping at setup time).
 return {
   "nvim-neo-tree/neo-tree.nvim",
   branch = "v3.x",
-  opts = {
-    -- neovim map
-    vim.api.nvim_set_keymap("n", "<C-n>", ":Neotree toggle<CR>", {noremap = true, silent = true}),
-  },
   dependencies = {
     "nvim-lua/plenary.nvim",
-    "nvim-tree/nvim-web-devicons", -- not strictly required, but recommended
+    "nvim-tree/nvim-web-devicons",
     "MunifTanjim/nui.nvim",
-    "3rd/image.nvim", -- Optional image support in preview window: See `# Preview Mode` for more information
+    "3rd/image.nvim",
+  },
+  keys = {
+    { "<C-n>", "<cmd>Neotree toggle<CR>", mode = { "n" }, desc = "Neo-tree: toggle" },
   },
 }

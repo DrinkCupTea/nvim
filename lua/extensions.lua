@@ -1,3 +1,6 @@
+-- extensions.lua — lazy.nvim bootstrap & plugin registration.
+-- All plugin specs live under lua/plugins/ and are grouped below by purpose.
+
 local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
 if not vim.loop.fs_stat(lazypath) then
   vim.fn.system({
@@ -5,15 +8,13 @@ if not vim.loop.fs_stat(lazypath) then
     "clone",
     "--filter=blob:none",
     "https://github.com/folke/lazy.nvim.git",
-    "--branch=stable", -- latest stable release
+    "--branch=stable",
     lazypath,
   })
 end
 vim.opt.rtp:prepend(lazypath)
 
-local lazy = require("lazy")
-
-lazy.setup({
+require("lazy").setup({
   -- UI
   require("plugins.bufferline"),
   require("plugins.gruvbox"),
@@ -24,18 +25,18 @@ lazy.setup({
   require("plugins.neo-tree"),
   require("plugins.fzf-lua"),
   require("plugins.treesitter"),
-  require('plugins.gitsigns'),
+  require("plugins.gitsigns"),
 
   -- CODE
   require("plugins.autopair"),
   require("plugins.surround"),
-  require('plugins.comment'),
+  require("plugins.comment"),
 
-  -- LSP
-  -- require("lsp"), depend on lsp-config, required in it
-  -- require("lsp.debugger"),
+  -- LSP: see lua/plugins/lsp-config.lua
   require("plugins.autocomplete"),
   require("plugins.lsp-config"),
 
+  -- keybinding hints — empty spec kept intentionally; populate via keys in
+  -- plugins/which-key.lua when ready.
+  require("plugins.which-key"),
 })
-

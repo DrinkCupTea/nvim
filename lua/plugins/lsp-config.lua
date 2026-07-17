@@ -1,78 +1,62 @@
--- Global mappings.
--- See `:help vim.diagnostic.*` for documentation on any of the below functions
-vim.keymap.set('n', '<space>e', vim.diagnostic.open_float)
-vim.keymap.set('n', '[d', vim.diagnostic.goto_prev)
-vim.keymap.set('n', ']d', vim.diagnostic.goto_next)
-vim.keymap.set('n', '<space>q', vim.diagnostic.setloclist)
+-- lsp-config.lua — LSP keymaps (buffer-local) and per-server configuration.
+-- Backed by Neovim's built-in vim.lsp.config / vim.lsp.enable (0.11+).
+-- See :help lspconfig-nvim-0.11
 
--- Use LspAttach autocommand to only map the following keys
--- after the language server attaches to the current buffer
+-- Global diagnostic mappings (no buffer-local scoping needed).
+local keymap = vim.keymap.set
+keymap('n', '<space>e', vim.diagnostic.open_float,    { desc = 'Diagnostic: open float' })
+keymap('n', '[d',       vim.diagnostic.goto_prev,     { desc = 'Diagnostic: prev' })
+keymap('n', ']d',       vim.diagnostic.goto_next,     { desc = 'Diagnostic: next' })
+keymap('n', '<space>q', vim.diagnostic.setloclist,    { desc = 'Diagnostic: loclist' })
+
+-- Buffer-local mappings applied on LspAttach.
 vim.api.nvim_create_autocmd('LspAttach', {
-  group = vim.api.nvim_create_augroup('UserLspConfig', {}),
+  group    = vim.api.nvim_create_augroup('UserLspConfig', { clear = true }),
   callback = function(ev)
-    -- Enable completion triggered by <c-x><c-o>
+    -- <c-x><c-o> still works as a fallback completion trigger.
     vim.bo[ev.buf].omnifunc = 'v:lua.vim.lsp.omnifunc'
 
-    -- Buffer local mappings.
-    -- See `:help vim.lsp.*` for documentation on any of the below functions
-    local opts = { buffer = ev.buf }
-    vim.keymap.set('n', 'gD', vim.lsp.buf.declaration, opts)
-    vim.keymap.set('n', 'gd', vim.lsp.buf.definition, opts)
-    vim.keymap.set('n', 'K', vim.lsp.buf.hover, opts)
-    vim.keymap.set('n', 'gi', vim.lsp.buf.implementation, opts)
-    vim.keymap.set('n', '<C-k>', vim.lsp.buf.signature_help, opts)
-    vim.keymap.set('n', '<space>wa', vim.lsp.buf.add_workspace_folder, opts)
-    vim.keymap.set('n', '<space>wr', vim.lsp.buf.remove_workspace_folder, opts)
-    vim.keymap.set('n', '<space>wl', function()
-      print(vim.inspect(vim.lsp.buf.list_workspace_folders()))
-    end, opts)
-    vim.keymap.set('n', '<space>D', vim.lsp.buf.type_definition, opts)
-    vim.keymap.set('n', '<space>rn', vim.lsp.buf.rename, opts)
-    vim.keymap.set({ 'n', 'v' }, '<space>ca', vim.lsp.buf.code_action, opts)
-    vim.keymap.set('n', 'gr', vim.lsp.buf.references, opts)
-    vim.keymap.set('n', '<space>f', function()
-      vim.lsp.buf.format { async = true }
-    end, opts)
+    local opts = { buffer = ev.buf, desc = 'LSP' }
+    keymap('n', 'gD',    vim.lsp.buf.declaration,           opts)
+    keymap('n', 'gd',    vim.lsp.buf.definition,            opts)
+    keymap('n', 'K',     vim.lsp.buf.hover,                 opts)
+    keymap('n', 'gi',    vim.lsp.buf.implementation,        opts)
+    keymap('n', '<C-k>', vim.lsp.buf.signature_help,        opts)
+    keymap('n', '<space>D',  vim.lsp.buf.type_definition,   opts)
+    keymap('n', '<space>rn', vim.lsp.buf.rename,            opts)
+    keymap('n', '<space>f', function() vim.lsp.buf.format { async = true } end, opts)
+    keymap({ 'n', 'v' }, '<space>ca', vim.lsp.buf.code_action, opts)
+    keymap('n', 'gr',    vim.lsp.buf.references,            opts)
   end,
 })
 
--- Setup LSP servers using vim.lsp.config (Neovim 0.11+)
--- See :help lspconfig-nvim-0.11
-
-vim.lsp.config('lua_ls', {
-  settings = {
-    Lua = {
-      runtime = {
-        version = 'LuaJIT',
-      },
-      diagnostics = {
-        globals = {'vim'},
-      },
-      workspace = {
-        library = vim.api.nvim_get_runtime_file("", true),
-      },
-      telemetry = {
-        enable = false,
+-- Per-server configuration. Each entry becomes the `settings` payload that
+-- the server receives in the `initialize` request.
+local servers = {
+  lua_ls = {
+    settings = {
+      Lua = {
+        runtime = { version = 'LuaJIT' },
+        diagnostics = { globals = { 'vim' } },
+        workspace   = { library = vim.api.nvim_get_runtime_file('', true) },
+        telemetry   = { enable  = false },
       },
     },
   },
-})
+  clangd       = {},
+  pyright      = {},
+  gopls        = {},
+  rust_analyzer = {},
+  cmake        = {},
+  vimls        = {},
+}
 
-vim.lsp.config('clangd', {})
-vim.lsp.config('pyright', {})
-vim.lsp.config('gopls', {})
-vim.lsp.config('rust_analyzer', {})
-vim.lsp.config('cmake', {})
-vim.lsp.config('vimls', {})
+for name, cfg in pairs(servers) do
+  vim.lsp.config(name, cfg)
+end
 
--- Enable the LSP servers (this replaces the old lspconfig.setup() calls)
-vim.lsp.enable('lua_ls', true)
-vim.lsp.enable('clangd', true)
-vim.lsp.enable('pyright', true)
-vim.lsp.enable('gopls', true)
-vim.lsp.enable('rust_analyzer', true)
-vim.lsp.enable('cmake', true)
-vim.lsp.enable('vimls', true)
+vim.lsp.enable(vim.tbl_keys(servers), true)
 
+-- This file is a side-effect-only module for the LSP setup; lazy.nvim needs
+-- a table to register, so we hand it back an empty spec.
 return {}
-

@@ -1,36 +1,35 @@
 return {
   "akinsho/bufferline.nvim",
-  dependencies = {"nvim-tree/nvim-web-devicons", "moll/vim-bbye"},
+  dependencies = { "nvim-tree/nvim-web-devicons", "moll/vim-bbye" },
   config = function()
     require("bufferline").setup({
       options = {
-        -- 关闭 Tab 的命令，这里使用 moll/vim-bbye 的 :Bdelete 命令
+        -- :Bdelete provided by moll/vim-bbye.
         close_command = "Bdelete! %d",
         right_mouse_command = "Bdelete! %d",
-        -- 侧边栏配置
-        -- 左侧让出 nvim-tree 的位置，显示文字 File Explorer
+
+        -- Reserve left space for neo-tree when open.
         offsets = {
           {
-            filetype = "neo-tree",
-            text = "File Explorer",
-            highlight = "Directory",
-            text_align = "left",
+            filetype    = "neo-tree",
+            text        = "File Explorer",
+            highlight   = "Directory",
+            text_align  = "left",
           },
         },
-        -- 使用 nvim 内置 LSP
-        diagnostics = "nvim_lsp",
-        -- 可选，显示 LSP 报错图标
-        ---@diagnostic disable-next-line: unused-local
-        diagnostics_indicator = function(count, level, diagnostics_dict, context)
+
+        diagnostics          = "nvim_lsp",
+        diagnostics_indicator = function(_, _, diagnostics_dict)
           local s = " "
-          for e, n in pairs(diagnostics_dict) do
-            local sym = e == "error" and " " or (e == "warning" and " " or "")
+          for level, n in pairs(diagnostics_dict) do
+            local sym = level == "error" and "✗"
+                     or level == "warning" and "!"
+                     or "·"
             s = s .. n .. sym
           end
           return s
         end,
       },
     })
-  end
+  end,
 }
-
