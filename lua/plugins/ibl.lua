@@ -1,12 +1,9 @@
--- ibl.lua — indent guides. Let the active colorscheme drive the highlight
--- (the previous "rainbow" block created highlight groups that were never
--- wired to the indent renderer — see plan §1.5).
+-- ibl.lua — indent guides. The active colorscheme drives the highlight.
+-- `main = "ibl"` is required because the plugin's module is at the package
+-- root (lua/ibl.lua) rather than under lua/.
 return {
   "lukas-reineke/indent-blankline.nvim",
   event = "VeryLazy",
   opts = {},
-  config = function()
-    require("ibl").setup({})
-  end,
   main = "ibl",
 }
