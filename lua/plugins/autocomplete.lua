@@ -24,11 +24,19 @@ return {
       ['<CR>']  = { 'accept', 'fallback' },
       ['<Tab>'] = { 'select_next', 'fallback' },
     },
+    -- `sources` must be a table (not a bare list) so that
+    -- `vim.tbl_deep_extend('force', ...)` keeps the default `providers`
+    -- table intact — it would otherwise detect an array/hash shape
+    -- mismatch and replace the whole sub-table, dropping `providers`.
+    -- We only need to override the `default` enable-list; the default
+    -- providers (lsp/path/snippets/buffer/cmdline/omni) are fine as-is.
     sources = {
-      'lsp',       -- LSP completion
-      'path',      -- file paths
-      'snippets',  -- blink's native snippet engine
-      'buffer',    -- words from other buffers
+      default = {
+        'lsp',       -- LSP completion
+        'path',      -- file paths
+        'snippets',  -- blink's native snippet engine
+        'buffer',    -- words from other buffers
+      },
     },
     -- Use blink's native snippet support; no LuaSnip needed.
     snippets = { preset = 'default' },
